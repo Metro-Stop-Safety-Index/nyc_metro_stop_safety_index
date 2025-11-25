@@ -1,0 +1,20 @@
+.line-badge {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.line-badge--small {
+  width: 28px;
+  height: 28px;
+  font-size: 13px;
+}
+
+.line-badge--large {
+  width: 36px;
+  height: 36px;
+  font-size: 15px;
+}

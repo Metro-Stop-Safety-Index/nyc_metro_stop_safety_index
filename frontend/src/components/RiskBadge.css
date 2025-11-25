@@ -1,0 +1,35 @@
+.risk-badge {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.risk-badge--low {
+  background: var(--color-risk-low-bg);
+  color: var(--color-risk-low);
+}
+
+.risk-badge--moderate {
+  background: var(--color-risk-moderate-bg);
+  color: var(--color-risk-moderate);
+}
+
+.risk-badge--high {
+  background: var(--color-risk-high-bg);
+  color: var(--color-risk-high);
+}
+
+/* Emoji display mode */
+.risk-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.risk-emoji svg {
+  width: 32px;
+  height: 32px;
+}
