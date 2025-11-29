@@ -71,26 +71,26 @@ export default function DetailPage() {
         </div>
       </div>
 
-      <div className="warning-box">
-        <p className="warning-text">{station.warning}</p>
-      </div>
-
       <div className="detail-stats">
         <div className="stat-card">
-          <div className="stat-label">Monthly Incidents</div>
-          <div className="stat-value">{station.monthlyIncidents}</div>
-        </div>
-        <div className="stat-card">
           <div className="stat-label">Risk Score</div>
-          <div className="stat-value">{station.riskScore}</div>
+          <div className="stat-value">{station.riskScore}/10</div>
         </div>
         <div className="stat-card">
           <div className="stat-label">Yearly Incidents</div>
           <div className="stat-value">{station.yearlyIncidents}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Severity Index</div>
-          <div className="stat-value">{station.severityIndex.toFixed(1)}</div>
+          <div className="stat-label">Last Major Incident</div>
+          <div className="stat-value" style={{ textTransform: 'capitalize', fontSize: '0.9em' }}>
+            {station.last_incident_major_type || 'None'}
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Last Major Date</div>
+          <div className="stat-value" style={{ fontSize: '0.85em' }}>
+            {station.last_incident_major_date ? formatDate(station.last_incident_major_date) : 'N/A'}
+          </div>
         </div>
       </div>
 
@@ -116,7 +116,7 @@ export default function DetailPage() {
                 <div className="incident-type">{incident.type}</div>
                 <div className="incident-date">{formatDate(incident.date)}</div>
               </div>
-              <p className="incident-desc">{incident.description}</p>
+              <p className="incident-desc">{incident.PD_desc}</p>
             </div>
           ))
         )}

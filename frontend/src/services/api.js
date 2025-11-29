@@ -31,13 +31,12 @@ const MOCK_STATIONS = [
     name: 'Lex and 63rd St',
     lines: ['Q', 'F'],
     riskLevel: 'low',
-    riskScore: 28,
-    monthlyIncidents: 3,
+    riskScore: 3,
     yearlyIncidents: 42,
-    severityIndex: 2.1,
-    warning: 'This station has a low incident rate. Standard precautions are recommended.',
+    last_incident_major_date: '2025-11-10',
+    last_incident_major_type: 'theft',
     incidents: [
-      { type: 'Theft', date: '2025-11-10', description: 'Minor theft reported near turnstile' }
+      { type: 'Theft', date: '2025-11-10', PD_desc: 'Minor theft reported near turnstile' }
     ]
   },
   {
@@ -45,14 +44,13 @@ const MOCK_STATIONS = [
     name: '57 St',
     lines: ['F'],
     riskLevel: 'moderate',
-    riskScore: 52,
-    monthlyIncidents: 8,
-    yearlyIncidents: 98,
-    severityIndex: 4.5,
-    warning: 'Moderate activity reported. Be aware of your surroundings during rush hours.',
+    riskScore: 5,
+    yearlyIncidents: 48,
+    last_incident_major_date: '2025-11-19',
+    last_incident_major_type: 'harassment',
     incidents: [
-      { type: 'Harassment', date: '2025-11-19', description: 'Verbal harassment reported on platform' },
-      { type: 'Theft', date: '2025-11-15', description: 'Pickpocketing incident during evening rush' }
+      { type: 'Harassment', date: '2025-11-19', PD_desc: 'Verbal harassment reported on platform' },
+      { type: 'Theft', date: '2025-11-15', PD_desc: 'Pickpocketing incident during evening rush' }
     ]
   },
   {
@@ -60,13 +58,12 @@ const MOCK_STATIONS = [
     name: '47-50 Sts Rockefeller Ctr',
     lines: ['D', 'F', 'M', 'B'],
     riskLevel: 'low',
-    riskScore: 35,
-    monthlyIncidents: 5,
-    yearlyIncidents: 65,
-    severityIndex: 3.2,
-    warning: 'High foot traffic area. Keep belongings secure during peak times.',
+    riskScore: 3,
+    yearlyIncidents: 35,
+    last_incident_major_date: '2025-11-18',
+    last_incident_major_type: 'theft',
     incidents: [
-      { type: 'Theft', date: '2025-11-18', description: 'Bag snatching incident near exit' }
+      { type: 'Theft', date: '2025-11-18', PD_desc: 'Bag snatching incident near exit' }
     ]
   },
   {
@@ -74,15 +71,14 @@ const MOCK_STATIONS = [
     name: '49 St',
     lines: ['N', 'Q', 'R', 'W'],
     riskLevel: 'high',
-    riskScore: 78,
-    monthlyIncidents: 18,
-    yearlyIncidents: 215,
-    severityIndex: 7.9,
-    warning: 'Multiple incidents reported recently. Exercise heightened caution, especially late at night.',
+    riskScore: 7,
+    yearlyIncidents: 50,
+    last_incident_major_date: '2025-11-21',
+    last_incident_major_type: 'assault',
     incidents: [
-      { type: 'Assault', date: '2025-11-21', description: 'Physical altercation between passengers' },
-      { type: 'Theft', date: '2025-11-19', description: 'Multiple phone thefts reported' },
-      { type: 'Harassment', date: '2025-11-17', description: 'Aggressive panhandling incidents' }
+      { type: 'Assault', date: '2025-11-21', PD_desc: 'Physical altercation between passengers' },
+      { type: 'Theft', date: '2025-11-19', PD_desc: 'Multiple phone thefts reported' },
+      { type: 'Harassment', date: '2025-11-17', PD_desc: 'Aggressive panhandling incidents' }
     ]
   },
   {
@@ -90,15 +86,14 @@ const MOCK_STATIONS = [
     name: '51 St',
     lines: ['6'],
     riskLevel: 'moderate',
-    riskScore: 54,
-    monthlyIncidents: 12,
-    yearlyIncidents: 156,
-    severityIndex: 6.8,
-    warning: 'Incidents of theft and assault have been reported here. Use caution when entering and exiting the station.',
+    riskScore: 6,
+    yearlyIncidents: 56,
+    last_incident_major_date: '2025-11-20',
+    last_incident_major_type: 'theft',
     incidents: [
-      { type: 'Theft', date: '2025-11-20', description: 'Pickpocketing reported during evening rush hour' },
-      { type: 'Harassment', date: '2025-11-18', description: 'Verbal harassment incident at platform entrance' },
-      { type: 'Assault', date: '2025-11-15', description: 'Minor physical altercation between passengers' }
+      { type: 'Theft', date: '2025-11-20', PD_desc: 'Pickpocketing reported during evening rush hour' },
+      { type: 'Harassment', date: '2025-11-18', PD_desc: 'Verbal harassment incident at platform entrance' },
+      { type: 'Assault', date: '2025-11-15', PD_desc: 'Minor physical altercation between passengers' }
     ]
   },
   {
@@ -106,13 +101,12 @@ const MOCK_STATIONS = [
     name: 'Lexington Av/53 St',
     lines: ['E', 'M'],
     riskLevel: 'low',
-    riskScore: 31,
-    monthlyIncidents: 4,
-    yearlyIncidents: 52,
-    severityIndex: 2.8,
-    warning: 'Generally safe station. Standard awareness recommended.',
+    riskScore: 3,
+    yearlyIncidents: 32,
+    last_incident_major_date: '2025-11-12',
+    last_incident_major_type: 'theft',
     incidents: [
-      { type: 'Theft', date: '2025-11-12', description: 'Wallet theft reported' }
+      { type: 'Theft', date: '2025-11-12', PD_desc: 'Wallet theft reported' }
     ]
   },
   {
@@ -120,11 +114,10 @@ const MOCK_STATIONS = [
     name: '72 St',
     lines: ['Q'],
     riskLevel: 'low',
-    riskScore: 25,
-    monthlyIncidents: 2,
-    yearlyIncidents: 28,
-    severityIndex: 1.9,
-    warning: 'One of the safer stations in the network. Normal precautions apply.',
+    riskScore: 2,
+    yearlyIncidents: 18,
+    last_incident_major_date: null,
+    last_incident_major_type: null,
     incidents: []
   },
   {
@@ -132,14 +125,13 @@ const MOCK_STATIONS = [
     name: '57 St/7 Av',
     lines: ['N', 'Q', 'R', 'W'],
     riskLevel: 'moderate',
-    riskScore: 48,
-    monthlyIncidents: 9,
-    yearlyIncidents: 112,
-    severityIndex: 5.2,
-    warning: 'Tourist area with moderate incident reports. Stay alert in crowded areas.',
+    riskScore: 5,
+    yearlyIncidents: 52,
+    last_incident_major_date: '2025-11-16',
+    last_incident_major_type: 'theft',
     incidents: [
-      { type: 'Theft', date: '2025-11-16', description: 'Camera stolen from tourist' },
-      { type: 'Harassment', date: '2025-11-14', description: 'Aggressive vendor confrontation' }
+      { type: 'Theft', date: '2025-11-16', PD_desc: 'Camera stolen from tourist' },
+      { type: 'Harassment', date: '2025-11-14', PD_desc: 'Aggressive vendor confrontation' }
     ]
   },
   {
@@ -147,16 +139,14 @@ const MOCK_STATIONS = [
     name: 'Times Square-42 St',
     lines: ['1', '2', '3', '7'],
     riskLevel: 'high',
-    riskScore: 85,
-    monthlyIncidents: 25,
-    yearlyIncidents: 298,
-    severityIndex: 8.5,
-    warning: 'Highest traffic station in the system. Multiple incident types reported regularly. Exercise extreme caution.',
+    riskScore: 9,
+    yearlyIncidents: 78,
+    last_incident_major_date: '2025-11-21',
+    last_incident_major_type: 'assault',
     incidents: [
-      { type: 'Assault', date: '2025-11-21', description: 'Unprovoked attack on passenger' },
-      { type: 'Theft', date: '2025-11-20', description: 'Multiple wallet thefts' },
-      { type: 'Harassment', date: '2025-11-19', description: 'Group harassment incident' },
-      { type: 'Vandalism', date: '2025-11-18', description: 'Property damage to turnstiles' }
+      { type: 'Assault', date: '2025-11-21', PD_desc: 'Unprovoked attack on passenger' },
+      { type: 'Theft', date: '2025-11-20', PD_desc: 'Multiple wallet thefts' },
+      { type: 'Harassment', date: '2025-11-19', PD_desc: 'Group harassment incident' }
     ]
   },
   {
@@ -164,14 +154,13 @@ const MOCK_STATIONS = [
     name: '34 St-Herald Square',
     lines: ['D', 'F', 'M'],
     riskLevel: 'moderate',
-    riskScore: 58,
-    monthlyIncidents: 14,
-    yearlyIncidents: 168,
-    severityIndex: 6.1,
-    warning: 'Busy shopping district station. Watch for pickpockets during retail hours.',
+    riskScore: 6,
+    yearlyIncidents: 58,
+    last_incident_major_date: '2025-11-20',
+    last_incident_major_type: 'theft',
     incidents: [
-      { type: 'Theft', date: '2025-11-20', description: 'Shopping bag theft near entrance' },
-      { type: 'Harassment', date: '2025-11-17', description: 'Verbal altercation on platform' }
+      { type: 'Theft', date: '2025-11-20', PD_desc: 'Shopping bag theft near entrance' },
+      { type: 'Harassment', date: '2025-11-17', PD_desc: 'Verbal altercation on platform' }
     ]
   }
 ];

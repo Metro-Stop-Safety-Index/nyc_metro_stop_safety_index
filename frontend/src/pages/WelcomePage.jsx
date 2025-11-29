@@ -1,15 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IconButton, LocationModal } from '../components';
+import { useAuth } from '../contexts/AuthContext';
 import { useLocation } from '../hooks/useLocation';
 import { getLastUpdated } from '../services/api';
 import './WelcomePage.css';
 
 export default function WelcomePage() {
   const navigate = useNavigate();
+  const { currentUser, loading: authLoading, signInAsGuest } = useAuth();
   const [lastUpdated, setLastUpdated] = useState('--');
   const [showLocationModal, setShowLocationModal] = useState(false);
+  const [guestLoading, setGuestLoading] = useState(false);
   const { permissionStatus, hasAskedPermission, requestLocation, denyPermission } = useLocation();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!authLoading && currentUser) {
+      navigate('/list', { replace: true });
+    }
+  }, [currentUser, authLoading, navigate]);
 
   useEffect(() => {
     getLastUpdated().then((data) => {
@@ -42,21 +52,28 @@ export default function WelcomePage() {
     denyPermission();
   };
 
+  const handleGuestAccess = async () => {
+    setGuestLoading(true);
+    const result = await signInAsGuest();
+    if (result.success) {
+      navigate('/list', { replace: true });
+    } else {
+      setGuestLoading(false);
+      alert(result.error);
+    }
+  };
+
+  // Show loading spinner while auth is initializing
+  if (authLoading) {
+    return (
+      <div className="welcome-page welcome-loading">
+        <div className="spinner" />
+      </div>
+    );
+  }
+
   return (
     <div className="welcome-page">
-      <div className="header-icons header-icons--end">
-        <IconButton
-          ariaLabel="Settings"
-          onClick={() => navigate('/settings')}
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="3" />
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-            </svg>
-          }
-        />
-      </div>
-
       <div className="welcome-content">
         <h1 className="app-title">Metro Stop<br />Danger Index</h1>
         <p className="app-subtitle">
@@ -68,9 +85,26 @@ export default function WelcomePage() {
         </div>
 
         <p className="update-info">Last updated: {lastUpdated}</p>
-        <button className="primary-button" onClick={() => navigate('/list')}>
-          View Index Scores
-        </button>
+
+        <div className="auth-buttons">
+          <button className="primary-button" onClick={() => navigate('/login')}>
+            Sign In
+          </button>
+          <button
+            className="guest-button"
+            onClick={handleGuestAccess}
+            disabled={guestLoading}
+          >
+            {guestLoading ? (
+              <span className="button-loading">
+                <span className="button-spinner" />
+                Loading...
+              </span>
+            ) : (
+              'Continue as Guest'
+            )}
+          </button>
+        </div>
       </div>
 
       {showLocationModal && (

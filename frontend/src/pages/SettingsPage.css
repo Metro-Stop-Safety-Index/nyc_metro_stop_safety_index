@@ -179,3 +179,48 @@
   color: var(--color-text-tertiary);
   flex-shrink: 0;
 }
+
+/* Account Buttons */
+.logout-button,
+.upgrade-button {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.logout-button {
+  background: var(--color-bg-secondary);
+  border: none;
+  color: var(--color-text-secondary);
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.logout-button:active {
+  transform: scale(0.98);
+}
+
+.upgrade-button {
+  background: transparent;
+  border: 2px solid #5B9A9A;
+  color: #5B9A9A;
+}
+
+.upgrade-button:hover {
+  background: rgba(91, 154, 154, 0.1);
+}
+
+.upgrade-button:active {
+  transform: scale(0.98);
+}

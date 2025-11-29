@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { useSettings } from '../contexts/SettingsContext';
 import { useLocation } from '../hooks/useLocation';
 import './SettingsPage.css';
 
 export default function SettingsPage() {
   const navigate = useNavigate();
+  const { currentUser, isAnonymous, logout } = useAuth();
   const { settings, updateSetting } = useSettings();
   const { location, permissionStatus, requestLocation, resetPermission } = useLocation();
 
@@ -20,6 +22,13 @@ export default function SettingsPage() {
     }
   };
 
+  const handleLogout = async () => {
+    const result = await logout();
+    if (result.success) {
+      navigate('/', { replace: true });
+    }
+  };
+
   return (
     <div className="settings-page">
       <button className="back-button" onClick={() => navigate('/list')} aria-label="Go back">
@@ -29,6 +38,47 @@ export default function SettingsPage() {
       </button>
 
       <h1 className="settings-title">Settings</h1>
+
+      {/* Account Section */}
+      <div className="settings-section">
+        <h2 className="section-label">Account</h2>
+
+        <div className="setting-item">
+          <div className="setting-info">
+            <span className="setting-name">
+              {isAnonymous ? 'Guest User' : currentUser?.email || 'User'}
+            </span>
+            <span className="setting-desc">
+              {isAnonymous ? 'Browsing anonymously' : 'Registered account'}
+            </span>
+          </div>
+        </div>
+
+        {isAnonymous && (
+          <div className="setting-item">
+            <button
+              className="upgrade-button"
+              onClick={() => navigate('/signup')}
+            >
+              Upgrade to Full Account
+            </button>
+          </div>
+        )}
+
+        <div className="setting-item">
+          <button
+            className="logout-button"
+            onClick={handleLogout}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17H3C2.46957 17 1.96086 16.7893 1.58579 16.4142C1.21071 16.0391 1 15.5304 1 15V5C1 4.46957 1.21071 3.96086 1.58579 3.58579C1.96086 3.21071 2.46957 3 3 3H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M14 13L19 8L14 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M19 8H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </div>
 
       <div className="settings-section">
         <h2 className="section-label">Display</h2>
@@ -45,37 +95,6 @@ export default function SettingsPage() {
           >
             <option value="text">Text</option>
             <option value="emoji">Emoji</option>
-          </select>
-        </div>
-
-        <div className="setting-item">
-          <div className="setting-info">
-            <span className="setting-name">Dark Mode</span>
-            <span className="setting-desc">Use dark theme</span>
-          </div>
-          <label className="toggle">
-            <input
-              type="checkbox"
-              checked={settings.darkMode}
-              onChange={(e) => updateSetting('darkMode', e.target.checked)}
-            />
-            <span className="toggle-slider"></span>
-          </label>
-        </div>
-
-        <div className="setting-item">
-          <div className="setting-info">
-            <span className="setting-name">Language</span>
-            <span className="setting-desc">Select display language</span>
-          </div>
-          <select
-            className="setting-select"
-            value={settings.language}
-            onChange={(e) => updateSetting('language', e.target.value)}
-          >
-            <option value="en">English</option>
-            <option value="zh">中文</option>
-            <option value="es">Español</option>
           </select>
         </div>
       </div>
@@ -149,49 +168,6 @@ export default function SettingsPage() {
             />
             <span className="toggle-slider"></span>
           </label>
-        </div>
-      </div>
-
-      <div className="settings-section">
-        <h2 className="section-label">Data</h2>
-
-        <div className="setting-item clickable">
-          <div className="setting-info">
-            <span className="setting-name">Clear Cache</span>
-            <span className="setting-desc">Remove locally stored data</span>
-          </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </div>
-      </div>
-
-      <div className="settings-section">
-        <h2 className="section-label">About</h2>
-
-        <div className="setting-item">
-          <div className="setting-info">
-            <span className="setting-name">Version</span>
-          </div>
-          <span className="setting-value">1.0.0</span>
-        </div>
-
-        <div className="setting-item clickable">
-          <div className="setting-info">
-            <span className="setting-name">Privacy Policy</span>
-          </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </div>
-
-        <div className="setting-item clickable">
-          <div className="setting-info">
-            <span className="setting-name">Terms of Service</span>
-          </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
         </div>
       </div>
     </div>
