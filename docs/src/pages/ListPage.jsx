@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconButton, SearchBox, StationItem } from '../components';
-import { getStations } from '../services/api';
+import { IconButton, SearchBox, StationItem } from '../components/index.js';
+import { getStations } from '../services/api.js';
 import './ListPage.css';
 
 export default function ListPage() {

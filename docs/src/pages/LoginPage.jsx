@@ -1,20 +1,19 @@
 /**
- * Signup Page
- * Create new account with email and password
+ * Login Page
+ * Email/password login and guest access
  */
 
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import './LoginPage.css';
 
-export default function SignupPage() {
+export default function LoginPage() {
   const navigate = useNavigate();
-  const { currentUser, signup } = useAuth();
+  const { currentUser, login, signInAsGuest } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -29,25 +28,29 @@ export default function SignupPage() {
     e.preventDefault();
 
     // Validate inputs
-    if (!email || !password || !confirmPassword) {
-      setError('Please fill in all fields');
-      return;
-    }
-
-    if (password.length < 6) {
-      setError('Password should be at least 6 characters');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
+    if (!email || !password) {
+      setError('Please enter email and password');
       return;
     }
 
     setError('');
     setLoading(true);
 
-    const result = await signup(email, password);
+    const result = await login(email, password);
+
+    if (result.success) {
+      navigate('/list', { replace: true });
+    } else {
+      setError(result.error);
+      setLoading(false);
+    }
+  };
+
+  const handleGuestAccess = async () => {
+    setError('');
+    setLoading(true);
+
+    const result = await signInAsGuest();
 
     if (result.success) {
       navigate('/list', { replace: true });
@@ -62,8 +65,8 @@ export default function SignupPage() {
       <div className="login-container">
         <div className="login-header">
           <img src="/metro_image.png" alt="Metro" className="login-logo" />
-          <h1 className="login-title">Create Account</h1>
-          <p className="login-subtitle">Sign up to get started</p>
+          <h1 className="login-title">Welcome Back</h1>
+          <p className="login-subtitle">Sign in to access safety information</p>
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
@@ -103,20 +106,6 @@ export default function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
             />
-            <p className="password-hint">At least 6 characters</p>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              className="form-input"
-              placeholder="••••••••"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              disabled={loading}
-            />
           </div>
 
           <button
@@ -127,18 +116,37 @@ export default function SignupPage() {
             {loading ? (
               <span className="button-loading">
                 <span className="button-spinner" />
-                Creating account...
+                Signing in...
               </span>
             ) : (
-              'Create Account'
+              'Sign In'
             )}
           </button>
         </form>
 
         <div className="login-footer">
           <p className="login-signup-prompt">
-            Already have an account? <Link to="/login" className="login-link">Sign In</Link>
+            Don't have an account? <Link to="/signup" className="login-link">Sign Up</Link>
           </p>
+
+          <div className="login-divider">
+            <span>or</span>
+          </div>
+
+          <button
+            onClick={handleGuestAccess}
+            className="guest-button"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="button-loading">
+                <span className="button-spinner" />
+                Loading...
+              </span>
+            ) : (
+              'Continue as Guest'
+            )}
+          </button>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import LineBadge from './LineBadge';
-import RiskBadge from './RiskBadge';
+import LineBadge from './LineBadge.jsx';
+import RiskBadge from './RiskBadge.jsx';
 import './StationItem.css';
 
 export default function StationItem({ station, onClick }) {

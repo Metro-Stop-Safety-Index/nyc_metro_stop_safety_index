@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconButton, LocationModal } from '../components';
-import { useAuth } from '../contexts/AuthContext';
-import { useLocation } from '../hooks/useLocation';
-import { getLastUpdated } from '../services/api';
+import { IconButton, LocationModal } from '../components/index.js';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import { useLocation } from '../hooks/useLocation.js';
+import { getLastUpdated } from '../services/api.js';
 import './WelcomePage.css';
 
 export default function WelcomePage() {

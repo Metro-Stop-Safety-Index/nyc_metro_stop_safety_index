@@ -1,4 +1,4 @@
-import { getLineColor } from '../services/api';
+import { getLineColor } from '../services/api.js';
 import './LineBadge.css';
 
 export default function LineBadge({ line, size = 'small' }) {

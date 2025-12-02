@@ -1,4 +1,4 @@
-import { useSettings } from '../contexts/SettingsContext';
+import { useSettings } from '../contexts/SettingsContext.jsx';
 import './RiskBadge.css';
 
 const RISK_LABELS = {

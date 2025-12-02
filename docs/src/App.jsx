@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import { SettingsProvider } from './contexts/SettingsContext';
-import { WelcomePage, ListPage, DetailPage, SettingsPage, LoginPage, SignupPage } from './pages';
-import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext.jsx';
+import { SettingsProvider } from './contexts/SettingsContext.jsx';
+import { WelcomePage, ListPage, DetailPage, SettingsPage, LoginPage, SignupPage } from './pages/index.js';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
   return (

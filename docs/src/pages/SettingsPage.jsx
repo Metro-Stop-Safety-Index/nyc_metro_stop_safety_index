@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { useSettings } from '../contexts/SettingsContext';
-import { useLocation } from '../hooks/useLocation';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import { useSettings } from '../contexts/SettingsContext.jsx';
+import { useLocation } from '../hooks/useLocation.js';
 import './SettingsPage.css';
 
 export default function SettingsPage() {

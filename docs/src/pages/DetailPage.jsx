@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { LineBadge } from '../components';
-import { getStationById, formatDate } from '../services/api';
+import { LineBadge } from '../components/index.js';
+import { getStationById, formatDate } from '../services/api.js';
 import './DetailPage.css';
 
 const RISK_LABELS = {
